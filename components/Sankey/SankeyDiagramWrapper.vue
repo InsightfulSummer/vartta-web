@@ -1,14 +1,13 @@
 <template>
-  <v-card :color="color" :flat="flat">
+  <v-card :outlined="outlined" :flat="flat">
     <v-card-title>
-      <h3>
-        {{ label }}
-        ({{ selectedMlMethod }})
-      </h3>
+      {{ label }}
+      ({{ selectedMlMethod }})
     </v-card-title>
+    <v-divider></v-divider>
     <!--    <v-card-actions>-->
     <!--      <v-btn icon @click="meta.show = !meta.show">-->
-    <!--        <v-icon>{{ meta.show ? 'help' : 'help_outline' }}</v-icon>-->
+    <!--        <v-icon>mdi-{{ meta.show ? 'help_circle' : 'help_circle_outline' }}</v-icon>-->
     <!--      </v-btn>-->
     <!--    </v-card-actions>-->
     <!--    <v-slide-y-transition>-->
@@ -38,76 +37,80 @@ import SankeyDiagram from './SankeyDiagram'
 export default {
   name: 'SankeyDiagramWrapper',
   components: {
-    'sankey-diagram': SankeyDiagram
+    'sankey-diagram': SankeyDiagram,
   },
   props: {
     id: {
       type: String,
-      default: 'sankey'
+      default: 'sankey',
     },
     divId: {
       type: String,
-      default: 'sankey-div'
+      default: 'sankey-div',
     },
     height: {
       type: Number,
-      default: 0
+      default: 0,
     },
     width: {
       type: Number,
-      default: 0
+      default: 0,
     },
     color: {
       type: String,
-      default: 'transparent'
+      default: 'transparent',
     },
     flat: {
       type: Boolean,
-      default: true
+      default: true,
+    },
+    outlined: {
+      type: Boolean,
+      default: true,
     },
     label: {
       type: String,
-      default: 'This Amazing Sankey Diagram'
+      default: 'This Amazing Sankey Diagram',
     },
     selectedMlMethod: {
       type: String,
-      default: 'CNN'
+      default: 'CNN',
     },
     topics: {
       type: Array,
-      default: function() {
+      default() {
         return []
-      }
+      },
     },
     dataset: {
       type: Object,
-      default: function() {
+      default() {
         return {
           group_topics: [],
-          theme_topics: []
+          theme_topics: [],
         }
-      }
-    }
+      },
+    },
   },
   data() {
     return {
       meta: {
         show: false,
-        info: 'Hello this is only a help box!'
-      }
+        info: 'Hello this is only a help box!',
+      },
     }
   },
   computed: {
     groupsToTopics() {
       const temp = this.dataset.group_topics.filter(
-        item => item._id === this.selectedMlMethod
+        (item) => item._id === this.selectedMlMethod
       )
       if (temp.length > 0) return temp[0].items
       return []
     },
     themesToTopics() {
       const temp = this.dataset.theme_topics.filter(
-        item => item._id === this.selectedMlMethod
+        (item) => item._id === this.selectedMlMethod
       )
       if (temp.length > 0) return temp[0].items
       return []
@@ -115,23 +118,23 @@ export default {
     nodesList() {
       const that = this
       // Gathering all of the topics
-      const topics1 = new Set(this.groupsToTopics.map(it => it._id.topic))
-      const topics2 = new Set(this.themesToTopics.map(it => it._id.topic))
-      const nodes1 = [...new Set([...topics2, ...topics1])].map(node => {
+      const topics1 = new Set(this.groupsToTopics.map((it) => it._id.topic))
+      const topics2 = new Set(this.themesToTopics.map((it) => it._id.topic))
+      const nodes1 = [...new Set([...topics2, ...topics1])].map((node) => {
         return {
           id: node,
           name: that.getName(node),
-          type: 'topic'
+          type: 'topic',
         }
       })
       // Gathering user groups
-      const groups = new Set(this.groupsToTopics.map(it => it._id.group))
-      const nodes2 = [...new Set([...groups])].map(node => {
+      const groups = new Set(this.groupsToTopics.map((it) => it._id.group))
+      const nodes2 = [...new Set([...groups])].map((node) => {
         return { id: node, name: that.getName(node), type: 'group' }
       })
       // Gathering content themes
-      const themes = new Set(this.themesToTopics.map(it => it._id.theme))
-      const nodes3 = [...new Set([...themes])].map(node => {
+      const themes = new Set(this.themesToTopics.map((it) => it._id.theme))
+      const nodes3 = [...new Set([...themes])].map((node) => {
         return { id: node, name: that.getName(node), type: 'theme' }
       })
       // Joining the results and sorting them out
@@ -140,18 +143,18 @@ export default {
       })
     },
     linksList() {
-      const links1 = this.groupsToTopics.map(it => {
+      const links1 = this.groupsToTopics.map((it) => {
         return {
           source: it._id.group,
           target: it._id.topic,
-          value: it.count
+          value: it.count,
         }
       })
-      const links2 = this.themesToTopics.map(it => {
+      const links2 = this.themesToTopics.map((it) => {
         return {
           source: it._id.topic,
           target: it._id.theme,
-          value: it.count
+          value: it.count,
         }
       })
       // Sorting
@@ -167,41 +170,41 @@ export default {
           { id: 'topics', name: 'Topics' },
           { id: 'content_themes', name: 'Content Themes' },
           { id: 'sample1', name: 'Sample1' },
-          { id: 'sample2', name: 'Sample2' }
+          { id: 'sample2', name: 'Sample2' },
         ],
         links: [
           { source: 'user_categories', target: 'topics', value: 1 },
           { source: 'topics', target: 'content_themes', value: 1 },
           { source: 'topics', target: 'sample1', value: 1 },
-          { source: 'sample2', target: 'content_themes', value: 3 }
-        ]
+          { source: 'sample2', target: 'content_themes', value: 3 },
+        ],
       }
       if (this.selectedMlMethod === '') return res
       res.nodes = this.nodesList
       res.links = this.linksList
       return res
-    }
+    },
   },
   methods: {
-    handleClick: function(data) {
+    handleClick(data) {
       this.$emit('itemClick', data)
     },
-    handleMouseover: function(data) {
+    handleMouseover(data) {
       this.$emit('itemMouseover', data)
     },
-    handleMouseout: function(data) {
+    handleMouseout(data) {
       this.$emit('itemMouseout', data)
     },
-    applyHighlight: function(data) {
+    applyHighlight(data) {
       this.$refs.sankey.mouseover(data, true)
     },
-    removeHighlight: function(data) {
+    removeHighlight(data) {
       this.$refs.sankey.mouseout(data, true)
     },
     getName(name) {
       return `${name.charAt(0).toUpperCase()}${name.slice(1)}`
-    }
-  }
+    },
+  },
 }
 </script>
 

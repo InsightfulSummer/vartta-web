@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :light="!dark">
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
@@ -8,69 +8,64 @@
       app
     >
       <v-list>
-        <v-list-tile
+        <v-list-item
           v-for="(item, i) in items"
           :key="i"
           :to="item.to"
           router
           exact
         >
-          <v-list-tile-action>
+          <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-text="item.title" />
-          </v-list-tile-content>
-        </v-list-tile>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title" />
+          </v-list-item-content>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar :clipped-left="clipped" fixed app color="primary" dark>
-      <v-toolbar-side-icon @click="drawer = !drawer" />
+    <v-app-bar :clipped-left="clipped" fixed app>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>{{ `chevron_${miniVariant ? 'right' : 'left'}` }}</v-icon>
+        <v-icon>
+          mdi-{{ `chevron-double-${miniVariant ? 'right' : 'left'}` }}
+        </v-icon>
       </v-btn>
-      <!--      <v-btn icon @click.stop="clipped = !clipped">-->
-      <!--        <v-icon>web</v-icon>-->
-      <!--      </v-btn>-->
-      <!--      <v-btn icon @click.stop="fixed = !fixed">-->
-      <!--        <v-icon>remove</v-icon>-->
-      <!--      </v-btn>-->
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn v-if="disconnected" icon :loading="disconnected" disabled>
-        <v-icon>{{ disconnected ? 'power_off' : 'power' }}</v-icon>
+      <v-btn icon disabled>
+        <v-icon>mdi-network{{ disconnected ? '-off' : '' }}</v-icon>
       </v-btn>
-      <v-btn v-if="selectedScenario" round flat disabled>
-        <v-icon>play_arrow</v-icon>
-        {{ selectedScenario.title }}
+      <v-btn icon @click.stop="dark = !dark">
+        <v-icon>mdi-{{ `brightness-${dark ? '5' : '4'}` }}</v-icon>
       </v-btn>
-      <v-icon>{{ disconnected ? 'power_off' : 'power' }}</v-icon>
-    </v-toolbar>
+    </v-app-bar>
     <v-content>
-      <v-container :fluid="fluid">
+      <v-container fluid>
         <nuxt />
       </v-container>
     </v-content>
     <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
       <v-list>
-        <v-list-tile @click.native="right = !right">
-          <v-list-tile-action>
-            <v-icon light>compare_arrows</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
-        </v-list-tile>
+        <v-list-item @click.native="right = !right">
+          <v-list-item-action>
+            <v-icon light>
+              mdi-repeat
+            </v-icon>
+          </v-list-item-action>
+          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
+        </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-footer height="auto" color="primary" app>
-      <v-layout justify-center row wrap>
+    <v-footer height="auto" app>
+      <v-row justify="center">
         <v-btn
           v-for="link in items"
           :key="link.title"
           nuxt
-          flat
-          round
+          text
+          rounded
           :to="link.to"
-          color="white"
         >
           {{ link.title }}
         </v-btn>
@@ -87,7 +82,7 @@
         <!--            >&copy; {{ new Date().getFullYear() }}</span-->
         <!--          >-->
         <!--        </v-flex>-->
-      </v-layout>
+      </v-row>
     </v-footer>
   </v-app>
 </template>
@@ -95,47 +90,57 @@
 <script>
 import socket from '../lib/socket.io'
 export default {
-  name: 'LayoutDefault',
+  name: 'DefaultLayout',
   data() {
     return {
       fluid: true,
       disconnected: socket.disconnected,
       clipped: true,
-      drawer: true,
+      drawer: false,
       fixed: false,
-      items: [
-        {
-          icon: 'apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'bubble_chart',
-          title: 'Analytics',
-          to: '/analytics'
-        },
-        {
-          icon: 'dashboard',
-          title: 'Compare',
-          to: '/compare'
-        },
-        {
-          icon: 'chrome_reader_mode',
-          title: 'Shuffler',
-          to: '/shuffler'
-        }
-      ],
       miniVariant: true,
       right: true,
       rightDrawer: false,
       title: 'VARTTA',
+      items: [
+        {
+          icon: 'mdi-apps',
+          title: 'Welcome',
+          to: '/',
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'Analytics',
+          to: '/analytics',
+        },
+        {
+          icon: 'mdi-view-dashboard',
+          title: 'Compare',
+          to: '/compare',
+        },
+        {
+          icon: 'mdi-book-open',
+          title: 'Shuffler',
+          to: '/shuffler',
+        },
+        {
+          icon: 'mdi-account-search',
+          title: 'Triage',
+          to: '/triage',
+        },
+        // {
+        //   icon: 'mdi-badge-account-alert-outline',
+        //   title: 'Triage-Step',
+        //   to: '/triageStep',
+        // },
+      ],
       // Data required for connection metrics
       pingPong: {
         start: 0,
         end: 0,
         busy: false,
-        history: []
-      }
+        history: [],
+      },
     }
   },
   computed: {
@@ -158,9 +163,14 @@ export default {
       avg = (10 * avg) / (this.pingPong.history.length * 10)
       return avg
     },
-    selectedScenario() {
-      return this.$store.state.scenarios.find(a => a.consuming)
-    }
+    dark: {
+      get() {
+        return this.$vuetify.theme.dark
+      },
+      set(val) {
+        this.$vuetify.theme.dark = val
+      },
+    },
   },
   mounted() {
     const that = this
@@ -181,9 +191,7 @@ export default {
       // socket.emit('initial_data_request', {})
     })
 
-    socket.on('reconnecting', data => {
-      // eslint-disable-next-line no-console
-      console.log(data)
+    socket.on('reconnecting', (data) => {
       this.disconnected = socket.disconnected
     })
 
@@ -193,7 +201,7 @@ export default {
      * to the client. The data is then displayed in the "Received"
      * section of the page.
      */
-    socket.on('server_response', msg => {
+    socket.on('server_response', (msg) => {
       // document.getElementById('log').innerText = msg.data
     })
     /*
@@ -211,21 +219,20 @@ export default {
     /*
      * Store the incoming data
      */
-    socket.on('bulk-update', msg => {
+    socket.on('bulk-update', (msg) => {
       that.commitUpdates(msg)
     })
   },
   methods: {
-    commitUpdates: function(msg) {
-      // eslint-disable-next-line no-console
-      console.log('commiting bulk update')
+    commitUpdates(msg) {
       // Store the changes
       this.$store.commit('updateTopics', msg.topics)
       this.$store.commit('updateAggregatedTopics', msg.aggregatedTopics)
       this.$store.commit('updateAggregatedUsers', msg.aggregatedUsers)
       this.$store.commit('updateAggregatedKeywords', msg.aggregatedKeywords)
       this.$store.commit('addToRawTweets', msg.tweets)
-    }
-  }
+      // this.$store.commit('addToRawTweets', msg.users)
+    },
+  },
 }
 </script>

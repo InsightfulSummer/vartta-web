@@ -5,12 +5,7 @@
     :height="height"
     class="svg heatmap"
   >
-    <transition-group
-      id="rects"
-      tag="g"
-      name="fade"
-      :duration="transitionDuration"
-    >
+    <g id="rects">
       <rect
         v-for="item in dataset"
         :key="JSON.stringify(item)"
@@ -21,7 +16,7 @@
         :style="'fill: ' + colorScale(item.v) + ';'"
         class="rect"
       ></rect>
-    </transition-group>
+    </g>
     <g
       :class="'x-axis heatmap-' + chartDomID + '-x-axis'"
       :transform="'translate(0,' + chartBottom + ')'"
@@ -40,39 +35,39 @@ export default {
   props: {
     chartDomID: {
       type: String,
-      default: 'heat-map'
+      default: 'heat-map',
     },
     height: {
       type: Number,
-      default: 0
+      default: 0,
     },
     width: {
       type: Number,
-      default: 0
+      default: 0,
     },
     dataset: {
       type: Array,
-      default: function() {
+      default() {
         return []
-      }
+      },
     },
     colorRange: {
       type: Array,
-      default: function() {
+      default() {
         return ['#d7ffdb', '#006c03']
-      }
+      },
     },
     padding: {
       type: Object,
-      default: function() {
+      default() {
         return {
           top: 20,
           right: 20,
           left: 150,
-          bottom: 150
+          bottom: 150,
         }
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -81,68 +76,67 @@ export default {
       axes: {
         x: {
           padding: 0.01,
-          element: null
+          element: null,
         },
         y: {
           padding: 0.01,
-          element: null
-        }
+          element: null,
+        },
       },
-      transitionDuration: 500
     }
   },
   computed: {
-    chartLeft: function() {
+    chartLeft() {
       return this.padding.left
     },
-    chartRight: function() {
+    chartRight() {
       return this.width - this.padding.right
     },
-    chartBottom: function() {
+    chartBottom() {
       return this.height - this.padding.bottom
     },
-    chartTop: function() {
+    chartTop() {
       return this.padding.top
     },
-    chartHeight: function() {
+    chartHeight() {
       return this.chartBottom - this.chartTop
     },
-    chartWidth: function() {
+    chartWidth() {
       return this.chartRight - this.chartLeft
     },
-    xScale: function() {
+    xScale() {
       return d3
         .scaleBand()
-        .domain(this.dataset.map(d => d.x).sort())
+        .domain(this.dataset.map((d) => d.x).sort())
         .range([this.chartLeft, this.chartRight])
         .padding(this.axes.x.padding)
     },
-    yScale: function() {
+    yScale() {
       return d3
         .scaleBand()
-        .domain(this.dataset.map(d => d.y).sort())
+        .domain(this.dataset.map((d) => d.y).sort())
         .range([this.chartBottom, this.chartTop])
         .padding(this.axes.y.padding)
     },
-    colorScale: function() {
+    colorScale() {
       return d3
         .scaleLinear()
         .range(this.colorRange)
         .domain([
-          d3.min(this.dataset, function(d) {
+          d3.min(this.dataset, function (d) {
             return d.v
           }),
-          d3.max(this.dataset, function(d) {
+          d3.max(this.dataset, function (d) {
             return d.v
-          })
+          }),
         ])
     },
-    xAxisFunction: function() {
+    xAxisFunction() {
       return d3.axisBottom(this.xScale)
     },
-    yAxisFunction: function() {
+    yAxisFunction() {
       return d3.axisLeft(this.yScale)
-    }
+    },
   },
   beforeUpdate() {
     // re-draw axes
@@ -153,58 +147,37 @@ export default {
     this.setupSVG()
   },
   methods: {
-    setupSVG: function() {
+    setupSVG() {
       // Select the SVG element
       this.svg = d3.select('.heatmap')
       this.circlesGroup = d3.select('#rects')
       this.axes.x.element = d3.select('.heatmap-' + this.chartDomID + '-x-axis')
       this.axes.y.element = d3.select('.heatmap-' + this.chartDomID + '-y-axis')
     },
-    drawAxes: function() {
+    drawAxes() {
       // Draw X axis
       this.axes.x.element
         .call(this.xAxisFunction)
         .selectAll('text')
-        .attr('class', 'body-2')
+        .attr('class', 'body-1')
         .attr('dx', '-0.8em')
         .attr('dy', '-0.35em')
-        .attr('transform', 'rotate(-90)')
+        .attr('transform', 'rotate(-75)')
         .style('text-anchor', 'end')
 
       // Draw Y axis
       this.axes.y.element
         .call(this.yAxisFunction)
         .selectAll('text')
-        .attr('class', 'body-2')
-    }
-  }
+        .attr('class', 'body-1')
+    },
+  },
 }
 </script>
 
 <style scoped>
-.svg {
-  /*background: lightgrey;*/
-}
-
 .x-axis >>> .tick,
 .y-axis >>> .tick {
   font-family: 'Roboto', sans-serif;
-}
-
-.circle {
-  transition: all 500ms;
-}
-
-.fade-enter-active {
-  fill: green;
-}
-
-.fade-leave-active {
-  fill: brown;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>

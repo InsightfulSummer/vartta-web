@@ -1,10 +1,9 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <v-card :color="color" :flat="flat">
+  <v-card outlined>
     <v-card-title v-if="showMeta">
-      <h3>
-        {{ label }}
-      </h3>
+      {{ label }}
     </v-card-title>
+    <v-divider></v-divider>
     <v-card-text>
       <div :id="divId">
         <scatter-plot
@@ -24,44 +23,46 @@
         />
       </div>
     </v-card-text>
-    <v-card-actions>
-      <v-btn icon small @click="meta.show = !meta.show">
-        <v-icon>{{ meta.show ? 'help' : 'help_outline' }}</v-icon>
-      </v-btn>
-    </v-card-actions>
-    <v-slide-y-transition>
-      <v-card-actions v-show="meta.show">
-        <v-btn icon small @click="reset">
-          <v-icon>refresh</v-icon>
-        </v-btn>
+    <!--    <v-card-actions>-->
+    <!--      <v-btn icon small @click="meta.show = !meta.show">-->
+    <!--        <v-icon>-->
+    <!--          mdi-{{ meta.show ? 'help-circle' : 'help-circle-outline' }}-->
+    <!--        </v-icon>-->
+    <!--      </v-btn>-->
+    <!--    </v-card-actions>-->
+    <!--    <v-slide-y-transition>-->
+    <!--      <v-card-actions v-show="meta.show">-->
+    <!--        <v-btn icon small @click="reset">-->
+    <!--          <v-icon>mdi-refresh</v-icon>-->
+    <!--        </v-btn>-->
 
-        <v-spacer></v-spacer>
+    <!--        <v-spacer></v-spacer>-->
 
-        <span class="caption theme--light">Old:</span>
-        <input v-model="colorRange[0]" type="color" />
+    <!--        <span class="caption theme&#45;&#45;light">Old:</span>-->
+    <!--        <input v-model="colorRange[0]" type="color" />-->
 
-        <v-spacer></v-spacer>
+    <!--        <v-spacer></v-spacer>-->
 
-        <span class="caption theme--light">Recent:</span>
-        <input v-model="colorRange[1]" type="color" />
+    <!--        <span class="caption theme&#45;&#45;light">Recent:</span>-->
+    <!--        <input v-model="colorRange[1]" type="color" />-->
 
-        <v-spacer></v-spacer>
+    <!--        <v-spacer></v-spacer>-->
 
-        <v-slider
-          v-model="radius"
-          hint="Circle size"
-          persistent-hint
-          thumb-label="always"
-          min="1"
-          max="20"
-          prepend-icon="remove_circle"
-          append-icon="add_circle"
-          @click:prepend="decrement"
-          @click:append="increment"
-        >
-        </v-slider>
-      </v-card-actions>
-    </v-slide-y-transition>
+    <!--        <v-slider-->
+    <!--          v-model="radius"-->
+    <!--          hint="Circle size"-->
+    <!--          persistent-hint-->
+    <!--          thumb-label="always"-->
+    <!--          min="1"-->
+    <!--          max="20"-->
+    <!--          prepend-icon="mdi-minus-circle"-->
+    <!--          append-icon="mdi-plus-circle"-->
+    <!--          @click:prepend="decrement"-->
+    <!--          @click:append="increment"-->
+    <!--        >-->
+    <!--        </v-slider>-->
+    <!--      </v-card-actions>-->
+    <!--    </v-slide-y-transition>-->
   </v-card>
 </template>
 
@@ -71,93 +72,93 @@ import ScatterPlot from './ScatterPlot'
 export default {
   name: 'ScatterPlotWrapper',
   components: {
-    'scatter-plot': ScatterPlot
+    'scatter-plot': ScatterPlot,
   },
   props: {
     id: {
       type: String,
-      default: 'scatterplot'
+      default: 'scatterplot',
     },
     divId: {
       type: String,
-      default: 'scatterplot-div'
+      default: 'scatterplot-div',
     },
     height: {
       type: Number,
-      default: 0
+      default: 0,
     },
     width: {
       type: Number,
-      default: 0
+      default: 0,
     },
     color: {
       type: String,
-      default: 'transparent'
+      default: 'transparent',
     },
     flat: {
       type: Boolean,
-      default: true
+      default: true,
     },
     label: {
       type: String,
-      default: 'This Amazing Scatter Plot'
+      default: 'This Amazing Scatter Plot',
     },
     selectedData: {
       type: Object,
-      default: function() {
+      default() {
         return {}
-      }
+      },
     },
     dataset: {
       type: Array,
-      default: function() {
+      default() {
         return []
-      }
+      },
     },
     siftDataset: {
       type: Boolean,
-      default: true
+      default: true,
     },
     selectedAnalysisMethod: {
       type: String,
-      default: ''
+      default: '',
     },
     showMeta: {
       type: Boolean,
-      default: false
+      default: false,
     },
     axesMeta: {
       type: Object,
-      default: function() {
+      default() {
         return {
           x: {
             selector: 'x',
             initialBound: [-1, 200],
             scaleToContent: false,
             zoomEnabled: true,
-            label: 'User Influence'
+            label: 'User Influence',
           },
           y: {
             selector: 'y',
             initialBound: [-1, 1],
             scaleToContent: false,
             zoomEnabled: false,
-            label: 'Average Sentiment'
-          }
+            label: 'Average Sentiment',
+          },
         }
-      }
+      },
     },
     line: {
       type: Object,
-      default: function() {
+      default() {
         return {
           show: false,
           fill: 'none',
           stroke: 'grey',
-          stroke_width: '1.0'
+          stroke_width: '1.0',
         }
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -166,8 +167,8 @@ export default {
       colorRange: ['#d4e3f4', '#14004f'],
       meta: {
         show: false,
-        info: 'Hello this is only a help box!'
-      }
+        info: 'Hello this is only a help box!',
+      },
     }
   },
   computed: {
@@ -177,7 +178,7 @@ export default {
         // Sift the dataset by the selected analysis method
         if (this.selectedAnalysisMethod === '') return res
         const bucket = this.dataset.filter(
-          cat => cat._id === this.selectedAnalysisMethod
+          (cat) => cat._id === this.selectedAnalysisMethod
         )[0]
 
         // Construct the individual items to be represented
@@ -195,7 +196,7 @@ export default {
             id_str: item.user.id_str,
             // meta data
             tweets: item.tweets,
-            user: item.user
+            user: item.user,
           })
         }
       } else {
@@ -209,7 +210,7 @@ export default {
           res.push({
             ...tweet,
             x: new Date(tweet.date),
-            y: avgSentiment
+            y: avgSentiment,
           })
         }
       }
@@ -217,27 +218,27 @@ export default {
       return res.sort((a, b) => {
         return a.x > b.x ? 1 : -1
       })
-    }
+    },
   },
   methods: {
-    zoomed: function(transform) {
+    zoomed(transform) {
       this.transform = transform
     },
-    increment: function() {
+    increment() {
       this.radius += 1
     },
-    decrement: function() {
+    decrement() {
       this.radius -= 1
     },
-    circleClicked: function(data) {
+    circleClicked(data) {
       this.$emit('circleClicked', data)
     },
-    reset: function() {
+    reset() {
       this.transform = d3.zoomIdentity
       this.colorRange = ['#d4e3f4', '#14004f']
       this.radius = 4
-    }
-  }
+    },
+  },
 }
 </script>
 

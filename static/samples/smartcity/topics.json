@@ -1,0 +1,59 @@
+[
+  {
+    "id":"transportation",
+    "title":"Public Transportation",
+    "keywords":[
+      "sustainable transportation",
+      "public transportation",
+      "ttc",
+      "ttc subway",
+      "ttc bus",
+      "go ontario",
+      "go shuttle",
+      "go bus",
+      "toronto subway station",
+      "toronto bus station",
+      "toronto metro",
+      "gas station",
+      "pearson airport"
+    ]
+  },
+  {
+    "id":"urban",
+    "title":"Urban Planning",
+    "keywords":[
+      "urban planning",
+      "urban sprawl",
+      "urban development",
+      "urban governance",
+      "toronto portlands",
+      "sustainable toronto"
+    ]
+  },
+  {
+    "id":"places",
+    "title":"Venues and Places",
+    "keywords":[
+      "CN Tower",
+      "royal ontario museum",
+      "Aquarium of Canada",
+      "Rogers Centre",
+      "Art Gallery of Ontario",
+      "Entertainment District",
+      "toronto zoo",
+      "casa loma",
+      "St. Lawrence Market",
+      "saint Lawrence market",
+      "Nathan Philips Square",
+      "toronto city hall",
+      "eaton center",
+      "Distillery District",
+      "High Park toronto",
+      "Toronto Islands",
+      "Ontario Science Centre",
+      "Hockey Hall of Fame",
+      "Graffiti Alley",
+      "toronto public library"
+    ]
+  }
+]

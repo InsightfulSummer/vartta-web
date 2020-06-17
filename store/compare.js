@@ -1,21 +1,14 @@
-export const strict = false
-function initialState() {
-  return {
-    comparisonSlider: 1,
-    comparisons: [{ analysis: '', machineLearning: '', topic: '' }]
-  }
-}
 export const state = () => ({
   comparisonSlider: 1,
-  comparisons: [{ analysis: '', machineLearning: '', topic: '' }]
+  comparisons: [{ analysis: '', machineLearning: '', topic: '' }],
 })
 
 export const mutations = {
-  reset(state) {
-    const initial = initialState()
-    Object.keys(initial).forEach(key => {
-      state[key] = initial[key]
-    })
+  resetComparisonSlider(state) {
+    state.comparisonSlider = 1
+  },
+  resetComparisons(state) {
+    state.comparisons = [{ analysis: '', machineLearning: '', topic: '' }]
   },
   setComparisonSlider(state, value) {
     state.comparisonSlider = value
@@ -30,7 +23,7 @@ export const mutations = {
         state.comparisons.push({
           analysis: '',
           machineLearning: '',
-          topic: ''
+          topic: '',
         })
     } else if (state.comparisons.length > count) {
       state.comparisons.splice(count)
@@ -52,5 +45,12 @@ export const mutations = {
   updateComparisonTopic(state, payload) {
     if (payload.index <= state.comparisons.length)
       state.comparisons[payload.index].topic = payload.value
-  }
+  },
+}
+
+export const actions = {
+  reset({ commit }) {
+    commit('resetComparisons')
+    commit('resetComparisonSlider')
+  },
 }

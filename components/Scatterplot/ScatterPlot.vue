@@ -35,7 +35,7 @@
         :transform="'translate(' + chartLeft + ',' + chartBottom + ')'"
       >
         <text
-          class="label"
+          class="label title"
           :transform="'translate(' + (chartWidth / 2 + 90) + ',+31)'"
         >
           {{ axesMeta.x.label }}
@@ -46,7 +46,7 @@
         :transform="'translate(' + chartLeft + ',' + chartTop + ')'"
       >
         <text
-          class="label"
+          class="label title"
           :transform="
             'rotate(-90) translate(' + -(chartHeight / 2 - 70) + ',-25)'
           "
@@ -85,9 +85,9 @@
           :r="radius"
           :fill="'url(#' + item.user.screen_name + ')'"
           class="circle"
-          @click="ev => clicked.call({}, ev, item)"
-          @mouseover="ev => highlight.call({}, ev, item)"
-          @mouseleave="ev => dim.call({}, ev, item)"
+          @click="(ev) => clicked.call({}, ev, item)"
+          @mouseover="(ev) => highlight.call({}, ev, item)"
+          @mouseleave="(ev) => dim.call({}, ev, item)"
         ></circle>
       </transition-group>
     </svg>
@@ -123,34 +123,34 @@ export default {
   props: {
     contextMenu: {
       type: Boolean,
-      default: false
+      default: false,
     },
     chartDomID: {
       type: String,
-      default: 'scatter-plot'
+      default: 'scatter-plot',
     },
     height: {
       type: Number,
-      default: 0
+      default: 0,
     },
     width: {
       type: Number,
-      default: 0
+      default: 0,
     },
     line: {
       type: Object,
-      default: function() {
+      default() {
         return {
           show: false,
           fill: 'none',
           stroke: 'grey',
-          stroke_width: '1.0'
+          stroke_width: '1.0',
         }
-      }
+      },
     },
     axesMeta: {
       type: Object,
-      default: function() {
+      default() {
         return {
           x: {
             selector: 'x',
@@ -158,7 +158,7 @@ export default {
             scaleToContent: true,
             zoomEnabled: true,
             label: 'User Influence',
-            show: true
+            show: true,
           },
           y: {
             selector: 'y',
@@ -166,50 +166,50 @@ export default {
             scaleToContent: false,
             zoomEnabled: true,
             label: 'Average Sentiment',
-            show: true
-          }
+            show: true,
+          },
         }
-      }
+      },
     },
     radius: {
       type: Number,
-      default: 24
+      default: 24,
     },
     colorRange: {
       type: Array,
-      default: function() {
+      default() {
         return ['#bbd6f4', '#1c008b']
-      }
+      },
     },
     dataset: {
       type: Array,
-      default: function() {
+      default() {
         return []
-      }
+      },
     },
     selectedData: {
       type: Object,
-      default: function() {
+      default() {
         return []
-      }
+      },
     },
     padding: {
       type: Object,
-      default: function() {
+      default() {
         return {
           top: 5,
           right: 5,
           left: 40,
-          bottom: 40
+          bottom: 40,
         }
-      }
+      },
     },
     transform: {
       type: Object,
-      default: function() {
+      default() {
         return d3.zoomIdentity
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -221,15 +221,15 @@ export default {
       axes: {
         x: {
           ticks: 10,
-          element: null
+          element: null,
         },
         y: {
           ticks: 10,
-          element: null
-        }
+          element: null,
+        },
       },
       zoom: null,
-      transitionDuration: 200
+      transitionDuration: 200,
     }
   },
   computed: {
@@ -239,43 +239,43 @@ export default {
           text: 'Analysis Method',
           align: 'left',
           sortable: true,
-          value: 'title'
+          value: 'title',
         },
         {
           text: 'Sentiment',
           align: 'left',
           sortable: true,
-          value: 'result'
-        }
+          value: 'result',
+        },
       ]
     },
-    chartLeft: function() {
+    chartLeft() {
       return this.padding.left
     },
-    chartRight: function() {
+    chartRight() {
       return this.width - this.padding.right
     },
-    chartBottom: function() {
+    chartBottom() {
       return this.height - this.padding.bottom
     },
-    chartTop: function() {
+    chartTop() {
       return this.padding.top
     },
-    chartHeight: function() {
+    chartHeight() {
       return this.chartBottom - this.chartTop
     },
-    chartWidth: function() {
+    chartWidth() {
       return this.chartRight - this.chartLeft
     },
-    xScale: function() {
+    xScale() {
       const selector = this.axesMeta.x.selector
       let min = this.axesMeta.x.initialBound[0]
       let max = this.axesMeta.x.initialBound[1]
       if (this.axesMeta.x.scaleToContent) {
-        min = d3.min(this.dataset, function(d) {
+        min = d3.min(this.dataset, function (d) {
           return d[selector]
         })
-        max = d3.max(this.dataset, function(d) {
+        max = d3.max(this.dataset, function (d) {
           return d[selector]
         })
       }
@@ -285,21 +285,19 @@ export default {
         max = new Date(max)
         x = d3.scaleTime()
       }
-      x.domain([min, max])
-        .range([0, this.chartWidth])
-        .nice()
+      x.domain([min, max]).range([0, this.chartWidth]).nice()
       if (this.axesMeta.x.zoomEnabled) return this.transform.rescaleX(x)
       else return x
     },
-    yScale: function() {
+    yScale() {
       const selector = this.axesMeta.y.selector
       let min = this.axesMeta.y.initialBound[0]
       let max = this.axesMeta.y.initialBound[1]
       if (this.axesMeta.y.scaleToContent) {
-        min = d3.min(this.dataset, function(d) {
+        min = d3.min(this.dataset, function (d) {
           return d[selector]
         })
-        max = d3.max(this.dataset, function(d) {
+        max = d3.max(this.dataset, function (d) {
           return d[selector]
         })
       }
@@ -311,38 +309,38 @@ export default {
       if (this.axesMeta.y.zoomEnabled) return this.transform.rescaleY(y)
       else return y
     },
-    colorScale: function() {
+    colorScale() {
       return d3
         .scaleLinear()
         .range(this.colorRange)
         .domain([0, this.dataset.length - 1])
     },
-    xAxisFunction: function() {
+    xAxisFunction() {
       return d3
         .axisBottom(this.xScale)
         .tickSize(-this.chartHeight)
         .ticks((this.width / this.height) * 10)
       // return d3.axisBottom(this.xScale).ticks((this.width / this.height) * 10)
     },
-    yAxisFunction: function() {
+    yAxisFunction() {
       return d3
         .axisLeft(this.yScale)
         .tickSize(-this.chartWidth)
         .ticks(this.axes.y.ticks)
       // return d3.axisLeft(this.yScale).tickSize(this.chartHeight)
     },
-    linePath: function() {
+    linePath() {
       const that = this
       return d3
         .line()
         .curve(d3.curveLinear) // Just add that to have a curve instead of segments
-        .x(function(d) {
+        .x(function (d) {
           return that.xScale(d[that.axesMeta.x.selector])
         })
-        .y(function(d) {
+        .y(function (d) {
           return that.yScale(d[that.axesMeta.y.selector])
         })
-    }
+    },
   },
   beforeUpdate() {
     // re-draw axes
@@ -356,7 +354,7 @@ export default {
     this.callZoomBehaviour()
   },
   methods: {
-    setupSVG: function() {
+    setupSVG() {
       // Select the SVG element
       this.svg = d3.select('.scatterplot-' + this.chartDomID)
       this.tooltip = d3.select('#' + this.chartDomID + '-tooltip')
@@ -369,7 +367,7 @@ export default {
         '.scatterplot-' + this.chartDomID + '-y-axis'
       )
     },
-    drawAxes: function() {
+    drawAxes() {
       // Draw X axis without transformation
       this.axes.x.element.call(this.xAxisFunction)
 
@@ -379,7 +377,7 @@ export default {
       // reset zoom
       // this.resetZoom()
     },
-    callZoomBehaviour: function() {
+    callZoomBehaviour() {
       const that = this
       this.zoom = d3.zoom().on('zoom', () => {
         that.$emit('zoomed', d3.event.transform)
@@ -387,11 +385,11 @@ export default {
       })
       this.view.call(this.zoom)
     },
-    resetZoom: function() {
+    resetZoom() {
       // reset the zoom
       if (this.zoom) this.view.call(this.zoom.transform, d3.zoomIdentity)
     },
-    clicked: function(ev, item) {
+    clicked(ev, item) {
       item.selected = !item.selected
       // ev.target.setAttribute('stroke', 'red')
       // ev.target.setAttribute('stroke-width', '3')
@@ -409,7 +407,7 @@ export default {
       //   this.tooltip.attr('persist', '0')
       this.$emit('circleClicked', item)
     },
-    highlight: function(ev, item) {
+    highlight(ev, item) {
       item.highlighted = true
       this.highlightedData = item
       if (this.contextMenu) {
@@ -423,7 +421,7 @@ export default {
       }
       this.$emit('highlight', ev)
     },
-    dim: function(ev, item) {
+    dim(ev, item) {
       item.highlighted = false
       if (this.contextMenu) {
         if (this.tooltip.attr('persist') === '0') {
@@ -432,16 +430,13 @@ export default {
             ev.target.setAttribute('stroke', '')
             ev.target.setAttribute('stroke-width', '0')
           }
-          this.tooltip
-            .transition()
-            .duration(500)
-            .style('opacity', 0)
+          this.tooltip.transition().duration(500).style('opacity', 0)
           this.highlightedData = {}
         }
       }
       this.$emit('dim', item)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -461,10 +456,9 @@ export default {
 }
 
 /* Axis Labels */
-.axis >>> .label {
+.svg >>> .label {
   fill: currentColor;
-  font-size: large;
-  font-weight: bolder;
+  stroke: currentColor;
   text-anchor: end;
 }
 

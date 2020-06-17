@@ -34,7 +34,7 @@
         :key="item.id_str + index"
         :cx="
           xScale(Object.keys(item[axesMeta.x.selector])[0]) +
-            xScale.bandwidth() / 2
+          xScale.bandwidth() / 2
         "
         :cy="yScale(yIndex(item)) + yScale.bandwidth() / 2"
         r="19"
@@ -43,17 +43,17 @@
         :stroke-width="item.hover || item.exam ? '3' : '0'"
         class="circle"
         @click="
-          data => {
+          (data) => {
             tweetClicked.call({}, data, item)
           }
         "
         @mouseover="
-          data => {
+          (data) => {
             mouseover.call({}, data, item)
           }
         "
         @mouseleave="
-          data => {
+          (data) => {
             mouseleave.call({}, data, item)
           }
         "
@@ -77,55 +77,55 @@ export default {
   props: {
     chartDomID: {
       type: String,
-      default: 'heat-map'
+      default: 'heat-map',
     },
     height: {
       type: Number,
-      default: 0
+      default: 0,
     },
     width: {
       type: Number,
-      default: 0
+      default: 0,
     },
     dataset: {
       type: Array,
-      default: function() {
+      default() {
         return []
-      }
+      },
     },
     topics: {
       type: Array,
-      default: function() {
+      default() {
         return []
-      }
+      },
     },
     colorRange: {
       type: Array,
-      default: function() {
+      default() {
         return ['#d7ffdb', '#006c03']
-      }
+      },
     },
     padding: {
       type: Object,
-      default: function() {
+      default() {
         return {
           top: 150,
           right: 5,
           left: 5,
-          bottom: 5
+          bottom: 5,
         }
-      }
+      },
     },
     axesMeta: {
       type: Object,
-      default: function() {
+      default() {
         return {
           x: {
             selector: 'topics',
             scaleToContent: true,
             zoomEnabled: false,
             label: 'Topics',
-            show: true
+            show: true,
           },
           y: {
             selector: 'y',
@@ -133,11 +133,11 @@ export default {
             scaleToContent: false,
             zoomEnabled: false,
             label: '',
-            show: false
-          }
+            show: false,
+          },
         }
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -146,82 +146,84 @@ export default {
       axes: {
         x: {
           padding: 0.01,
-          element: null
+          element: null,
         },
         y: {
           padding: 0.01,
-          element: null
-        }
+          element: null,
+        },
       },
-      transitionDuration: 500
+      transitionDuration: 500,
     }
   },
   computed: {
-    chartLeft: function() {
+    chartLeft() {
       return this.padding.left
     },
-    chartRight: function() {
+    chartRight() {
       return this.width - this.padding.right
     },
-    chartBottom: function() {
+    chartBottom() {
       return this.height - this.padding.bottom
     },
-    chartTop: function() {
+    chartTop() {
       return this.padding.top
     },
-    chartHeight: function() {
+    chartHeight() {
       return this.chartBottom - this.chartTop
     },
-    chartWidth: function() {
+    chartWidth() {
       return this.chartRight - this.chartLeft
     },
-    xScale: function() {
+    xScale() {
       return d3
         .scaleBand()
         .domain(this.topics)
         .range([this.chartLeft, this.chartRight])
         .padding(this.axes.x.padding)
     },
-    yScale: function() {
+    yScale() {
       return d3
         .scaleBand()
         .domain([0, 1, 2, 3])
         .range([this.chartTop, this.chartBottom])
         .padding(this.axes.y.padding)
     },
-    colorScale: function() {
+    colorScale() {
       return d3
         .scaleLinear()
         .range(this.colorRange)
         .domain([
-          d3.min(this.dataset, function(d) {
+          d3.min(this.dataset, function (d) {
             return d.v
           }),
-          d3.max(this.dataset, function(d) {
+          d3.max(this.dataset, function (d) {
             return d.v
-          })
+          }),
         ])
     },
-    xAxisFunction: function() {
+    xAxisFunction() {
       return d3.axisTop(this.xScale)
     },
-    yAxisFunction: function() {
+    yAxisFunction() {
       return d3.axisLeft(this.yScale)
     },
-    groupedTweets: function() {
-      return channel => {
-        return this.dataset.filter(a => Object.keys(a.topics).includes(channel))
-      }
-    },
-    yIndex: function() {
-      return tweet => {
-        return this.groupedTweets(Object.keys(tweet.topics)[0]).findIndex(
-          a => a.id_str === tweet.id_str
+    groupedTweets() {
+      return (channel) => {
+        return this.dataset.filter((a) =>
+          Object.keys(a.topics).includes(channel)
         )
       }
-    }
+    },
+    yIndex() {
+      return (tweet) => {
+        return this.groupedTweets(Object.keys(tweet.topics)[0]).findIndex(
+          (a) => a.id_str === tweet.id_str
+        )
+      }
+    },
   },
-  beforeUpdate() {
+  updated() {
     // re-draw axes
     this.drawAxes()
   },
@@ -230,30 +232,30 @@ export default {
     this.setupSVG()
   },
   methods: {
-    setupSVG: function() {
+    setupSVG() {
       // Select the SVG element
       this.svg = d3.select('.heatmap')
       this.circlesGroup = d3.select('#rects')
       this.axes.x.element = d3.select('.heatmap-' + this.chartDomID + '-x-axis')
       this.axes.y.element = d3.select('.heatmap-' + this.chartDomID + '-y-axis')
     },
-    drawAxes: function() {
+    drawAxes() {
       const that = this
       // Draw X axis
       if (this.topics.length > 0) {
         this.axes.x.element
           .call(this.xAxisFunction)
           .selectAll('text')
-          .attr('class', 'body-2')
+          .attr('class', 'overline')
           .attr('dx', '-1em')
           .attr('dy', '0em')
           .attr('y', '4')
-          .attr('transform', 'rotate(+90)')
+          .attr('transform', 'rotate(+75)')
           .style('text-anchor', 'end')
         this.axes.x.element
           .selectAll('.tick')
           .style('cursor', 'pointer')
-          .on('click', d => {
+          .on('click', (d) => {
             that.$emit('topicSelected', d)
           })
       }
@@ -263,20 +265,16 @@ export default {
       //   .selectAll('text')
       //   .attr('class', 'body-2')
     },
-    tweetClicked: function(data, tweet) {
+    tweetClicked(data, tweet) {
       this.$emit('tweetClicked', tweet)
     },
-    mouseover: function(data, tweet) {
+    mouseover(data, tweet) {
       tweet.hover = true
-      // eslint-disable-next-line no-console
-      console.log(tweet.hover)
     },
-    mouseleave: function(data, tweet) {
+    mouseleave(data, tweet) {
       tweet.hover = false
-      // eslint-disable-next-line no-console
-      console.log(tweet.hover)
-    }
-  }
+    },
+  },
 }
 </script>
 

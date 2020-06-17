@@ -10,23 +10,23 @@ import { Tweet } from 'vue-tweet-embed'
 export default {
   name: 'TestTweet',
   components: {
-    Tweet
+    Tweet,
   },
   props: {
     idStr: {
       type: String,
-      default: ''
+      default: '',
     },
     options: {
       type: Object,
-      default: function() {
+      default() {
         return {
           tweetLimit: '10',
           chrome: 'transparent',
-          dnt: 'true'
+          dnt: 'true',
         }
-      }
-    }
+      },
+    },
   },
   updated() {
     if (window.twttr) {
@@ -36,7 +36,7 @@ export default {
         document.getElementById('tweet-' + this.idStr + '-target')
       )
     }
-  }
+  },
 }
 </script>
 

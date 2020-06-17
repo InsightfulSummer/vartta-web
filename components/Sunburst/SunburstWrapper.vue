@@ -18,31 +18,31 @@ export default {
   props: {
     id: {
       type: String,
-      default: 'heatmap'
+      default: 'heatmap',
     },
     divId: {
       type: String,
-      default: 'heatmap-div'
+      default: 'heatmap-div',
     },
     height: {
       type: Number,
-      default: 0
+      default: 0,
     },
     width: {
       type: Number,
-      default: 0
+      default: 0,
     },
     dataset: {
       type: Array,
-      default: function() {
+      default() {
         return []
-      }
-    }
+      },
+    },
   },
   computed: {
-    sunburstData: function() {
+    sunburstData() {
       let root = {
-        height: 0
+        height: 0,
       }
       if (this.dataset.length > 0)
         root = d3
@@ -52,10 +52,10 @@ export default {
           .sort((a, b) => b.value - a.value)
       return d3.partition().size([2 * Math.PI, root.height + 1])(root)
     },
-    test1: function() {
+    test1() {
       return this.sunburstData.descendants().slice(1)
-    }
-  }
+    },
+  },
 }
 </script>
 
