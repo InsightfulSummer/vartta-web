@@ -5,11 +5,4 @@ services:
     build:
       context: .
     ports:
-    - 5100:3000
-    networks:
-      - default
-
-networks:
-  default:
-    external:
-      name: 'elasticsearch_elastic'
+    - 5100:4050

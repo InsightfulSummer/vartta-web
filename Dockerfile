@@ -2,8 +2,7 @@ FROM node:alpine3.12
 
 ENV HOST=0.0.0.0
 
-EXPOSE 5000
-EXPOSE 3000
+EXPOSE 4050
 WORKDIR /usr/src/app
 
 COPY package.json yarn.lock /usr/src/app/
