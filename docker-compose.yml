@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  vartta-web:
+    build:
+      context: .
+    ports:
+    - 5100:4050
