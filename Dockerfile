@@ -1,4 +1,4 @@
-FROM node:alpine3.12
+FROM node:14
 
 ENV HOST=0.0.0.0
 
