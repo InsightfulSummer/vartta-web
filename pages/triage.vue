@@ -153,7 +153,7 @@
               :id="'column-' + user.screen_name"
               :key="'column-' + index"
               :tweets="user.tweets"
-              :title="user.name + ' @' + user.screen_name"
+              :title="'From @' + user.screen_name"
               :vertical-portion="40"
             ></tweet-collection>
           </v-row>

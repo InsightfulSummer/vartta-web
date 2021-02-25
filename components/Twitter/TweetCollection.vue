@@ -1,12 +1,10 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-col md="6" lg="4" cols="12">
     <v-card :id="'tweetcollection-' + title" outlined min-width="300">
-      <v-card-actions>
-        <v-row align="center" justify="center">
-          <h2 class="font-weight-thin" style="text-transform: uppercase">
-            {{ title }}
-          </h2>
-        </v-row>
+      <v-card-actions class="align-center justify-center">
+        <h2 class="font-weight-thin" style="text-transform: uppercase">
+          {{ title }}
+        </h2>
       </v-card-actions>
       <v-divider></v-divider>
       <v-card-text
