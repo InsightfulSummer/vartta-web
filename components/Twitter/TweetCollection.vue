@@ -25,39 +25,37 @@
         ></tweet>
       </v-card-text>
       <v-divider></v-divider>
-      <v-card-actions>
-        <v-row justify="space-around" align="center">
-          <v-skeleton-loader
-            v-if="selectedTweets.length === 0"
-            type="avatar"
-            boilerplate
-          >
-          </v-skeleton-loader>
-          <v-skeleton-loader
-            v-if="selectedTweets.length === 0"
-            type="avatar"
-            boilerplate
-          >
-          </v-skeleton-loader>
-          <v-badge
-            v-for="(tweet, index) in selectedTweets"
-            :key="index"
-            overlap
-            color="orange"
-          >
-            <template #badge>
-              <v-icon x-small dark @click="removeTweet.call(this, tweet)">
-                mdi-close
-              </v-icon>
-            </template>
-            <v-avatar elevation @click="clicked.call({}, tweet)">
-              <img
-                :src="tweet.user.profile_image_url_https"
-                :alt="tweet.user.screen_name"
-              />
-            </v-avatar>
-          </v-badge>
-        </v-row>
+      <v-card-actions class="justify-space-around align-center">
+        <v-skeleton-loader
+          v-if="selectedTweets.length === 0"
+          type="avatar"
+          boilerplate
+        >
+        </v-skeleton-loader>
+        <v-skeleton-loader
+          v-if="selectedTweets.length === 0"
+          type="avatar"
+          boilerplate
+        >
+        </v-skeleton-loader>
+        <v-badge
+          v-for="(tweet, index) in selectedTweets"
+          :key="index"
+          overlap
+          color="orange"
+        >
+          <template #badge>
+            <v-icon x-small dark @click="removeTweet.call(this, tweet)">
+              mdi-close
+            </v-icon>
+          </template>
+          <v-avatar elevation @click="clicked.call({}, tweet)">
+            <img
+              :src="tweet.user.profile_image_url_https"
+              :alt="tweet.user.screen_name"
+            />
+          </v-avatar>
+        </v-badge>
       </v-card-actions>
     </v-card>
   </v-col>
