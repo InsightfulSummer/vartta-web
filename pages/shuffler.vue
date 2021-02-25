@@ -132,7 +132,7 @@ export default {
   },
   data() {
     return {
-      verticalPortion: 70,
+      verticalPortion: 60,
       dialog: false,
       contentThemeTreeSelections: [],
       userGroupsTreeSelections: [],
