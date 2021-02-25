@@ -3,7 +3,7 @@
     <v-col :lg="minimizeTopics ? '2' : '3'" :cols="minimizeTopics ? '4' : '5'">
       <v-card outlined>
         <v-card-title>
-          <span class="title">Topics</span>
+          <span class="text-h6">Topics</span>
           <v-spacer></v-spacer>
           <v-btn icon text @click="minimizeTopics = !minimizeTopics">
             <v-icon>
@@ -47,7 +47,7 @@
             align="start"
             justify="start"
             class="smooth-scroll flex-nowrap"
-            style="height: 100%; max-height: 100%;"
+            style="height: 100%; max-height: 100%"
             dense
             no-gutters
           >

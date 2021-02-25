@@ -3,7 +3,7 @@
     <v-card :id="'tweetcollection-' + title" outlined min-width="300">
       <v-card-actions>
         <v-row align="center" justify="center">
-          <h2 class="font-weight-thin" style="text-transform: uppercase;">
+          <h2 class="font-weight-thin" style="text-transform: uppercase">
             {{ title }}
           </h2>
         </v-row>
@@ -45,7 +45,7 @@
             overlap
             color="orange"
           >
-            <template v-slot:badge>
+            <template #badge>
               <v-icon x-small dark @click="removeTweet.call(this, tweet)">
                 mdi-close
               </v-icon>
@@ -94,8 +94,8 @@ export default {
       return this.tweets.filter((t) => t.selected)
     },
     sortedTweets() {
-      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-      return this.tweets.sort((a, b) => {
+      const temp = this.tweets
+      return temp.sort((a, b) => {
         return a.date < b.date ? 1 : -1
       })
     },

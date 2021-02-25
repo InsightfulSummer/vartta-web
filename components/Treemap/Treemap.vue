@@ -187,8 +187,8 @@ export default {
 </script>
 <style>
 .viewBoxStyle {
-  font-size: 20px;
   font: sans-serif;
+  font-size: 20px;
 }
 .rectStyle {
   fill-opacity: 0.6;

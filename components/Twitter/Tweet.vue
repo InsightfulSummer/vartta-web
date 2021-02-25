@@ -24,14 +24,14 @@
           </div>
           <div>
             <v-dialog v-model="dialog" max-width="500px">
-              <template v-slot:activator="{ on }">
+              <template #activator="{ on }">
                 <v-btn text icon color="error" v-on="on">
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
               </template>
               <v-card flat>
                 <v-card-title>
-                  <span class="title">Edit Tweet Labeling</span>
+                  <span class="text-h6">Edit Tweet Labeling</span>
                 </v-card-title>
                 <v-divider></v-divider>
                 <v-card-text>
@@ -46,7 +46,7 @@
                         label="User Category"
                         clearable
                       >
-                        <template v-slot:selection="data">
+                        <template #selection="data">
                           <v-chip
                             :key="JSON.stringify(data.item)"
                             :selected="data.selected"
@@ -67,7 +67,7 @@
                         label="Content Theme"
                         clearable
                       >
-                        <template v-slot:selection="data">
+                        <template #selection="data">
                           <v-chip
                             :key="JSON.stringify(data.item)"
                             :selected="data.selected"
@@ -98,9 +98,9 @@
       </v-col>
       <v-col cols="10" class="pb-0">
         <v-row justify="start" align="center">
-          <div class="text-truncate" style="max-width: 85%;">
+          <div class="text-truncate" style="max-width: 85%">
             <a
-              style="text-decoration: none; color: unset !important;"
+              style="text-decoration: none; color: unset !important"
               :href="'https://twitter.com/' + tweet.user.screen_name"
               target="_blank"
             >
@@ -118,11 +118,11 @@
               <span class="text--grey">@{{ tweet.user.screen_name }}</span>
             </a>
           </div>
-          <span class="caption">· {{ niceDate }}</span>
+          <span class="text-caption">· {{ niceDate }}</span>
         </v-row>
         <v-row justify="start" align="start">
           <!-- eslint-disable vue/no-v-html  -->
-          <div class="body-2" v-html="decoratedText"></div>
+          <div class="text-body-2" v-html="decoratedText"></div>
         </v-row>
         <v-btn block text @click="expand = !expand">
           <v-icon>{{
@@ -154,7 +154,8 @@
               hide-default-footer
               class="elevation-1"
             >
-              <template v-slot:item.result="{ item }">
+              <!-- eslint-disable-next-line vue/valid-v-slot -->
+              <template #item.result="{ item }">
                 <v-chip :color="item.result > 0 ? 'green' : 'orange'" outlined>
                   <v-icon left>
                     mdi-emoticon-{{
@@ -178,18 +179,20 @@
               hide-default-footer
               class="elevation-1"
             >
-              <template v-slot:item.result.group="{ item }">
+              <!-- eslint-disable-next-line vue/valid-v-slot -->
+              <template #item.result.group="{ item }">
                 <v-chip :color="colorScale(item.result.group)" outlined>
                   <v-icon left>mdi-account-circle</v-icon>
-                  <span class="overline">
+                  <span class="text-overline">
                     {{ item.result.group }}
                   </span>
                 </v-chip>
               </template>
-              <template v-slot:item.result.theme="{ item }">
+              <!-- eslint-disable-next-line vue/valid-v-slot -->
+              <template #item.result.theme="{ item }">
                 <v-chip :color="colorScale(item.result.theme)" outlined>
                   <v-icon left>mdi-tag</v-icon>
-                  <span class="overline">
+                  <span class="text-overline">
                     {{ item.result.theme }}
                   </span>
                 </v-chip>

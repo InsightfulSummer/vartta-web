@@ -105,9 +105,7 @@
     </v-col>
     <v-dialog v-model="tooSmall" max-width="290">
       <v-card>
-        <v-card-title class="headline">
-          Too Small!
-        </v-card-title>
+        <v-card-title class="text-h5"> Too Small! </v-card-title>
         <v-card-text>
           The screen is too small for this page. You can still continue and use
           this app, but it would be much more enjoyable on a larger screen.

@@ -65,7 +65,7 @@
           text-anchor="middle"
           font-family="sans-serif"
           :font-size="labelFont(arc)"
-          style="user-select: none;"
+          style="user-select: none"
           dy="0.35em"
           :transform="labelTransform(arc)"
         >
@@ -743,9 +743,11 @@ export default {
           // if arc is not selected, select all deselected users
           if (!this.selectedArcs.includes(arc.data.name)) {
             if (!this.selectedList.includes(tw.data.screen_name))
+              // eslint-disable-next-line vue/no-mutating-props
               this.selectedList.push(tw.data.screen_name)
           } // else it means the arc was selected and we should deselect selected users
           else if (this.selectedList.includes(tw.data.screen_name)) {
+            // eslint-disable-next-line vue/no-mutating-props
             this.selectedList = this.selectedList.filter(function (ele) {
               return ele !== tw.data.screen_name
             })

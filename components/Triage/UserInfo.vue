@@ -4,7 +4,7 @@
       <v-subheader>Selected Tweeters</v-subheader>
       <v-list shaped>
         <v-list-item-group color="primary">
-          <v-list-item v-for="(username, i) in this.selectedList" :key="i">
+          <v-list-item v-for="(username, i) in selectedList" :key="i">
             <v-list-item-icon>
               <v-btn
                 icon
