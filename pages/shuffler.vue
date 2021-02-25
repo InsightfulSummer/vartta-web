@@ -1,24 +1,22 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-row align="start" justify="start" no-gutters>
-    <v-col :lg="minimizeTopics ? '2' : '3'" :cols="minimizeTopics ? '4' : '5'">
+    <v-col lg="2" cols="3">
       <v-card outlined>
         <v-card-title>
           <span class="text-h6">Topics</span>
           <v-spacer></v-spacer>
-          <v-btn icon text @click="minimizeTopics = !minimizeTopics">
-            <v-icon>
-              mdi-chevron-double-{{ minimizeTopics ? 'right' : 'left' }}
-            </v-icon>
-          </v-btn>
           <v-btn text icon color="warning" @click="topicsTreeSelections = []">
-            <v-icon>mdi-replay</v-icon>
+            <v-icon>mdi-refresh</v-icon>
           </v-btn>
         </v-card-title>
         <v-divider></v-divider>
         <v-card-text
           class="text-truncate"
           :style="
-            'overflow: auto !important; max-height: ' + verticalPortion + 'vh;'
+            'overflow: auto !important; max-height: ' +
+            verticalPortion +
+            'vh;' +
+            'max-width: 100%;'
           "
         >
           <v-treeview
@@ -39,7 +37,7 @@
         </v-card-text>
       </v-card>
     </v-col>
-    <v-col :lg="minimizeTopics ? '10' : '9'" :cols="minimizeTopics ? '8' : '7'">
+    <v-col lg="10" cols="9">
       <v-row class="fill-height" justify="center">
         <v-col cols="12">
           <v-row
