@@ -1,7 +1,6 @@
 <template>
   <v-app :light="!dark">
     <v-navigation-drawer
-      v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
       fixed
@@ -24,36 +23,33 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" :clipped-right="clipped" fixed app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>
-          mdi-{{ `chevron-double-${miniVariant ? 'right' : 'left'}` }}
-        </v-icon>
-      </v-btn>
+    <v-app-bar :clipped-left="clipped" fixed app flat>
+      <v-app-bar-nav-icon @click.stop="miniVariant = !miniVariant" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <v-btn icon disabled>
         <v-icon>mdi-network{{ disconnected ? '-off' : '' }}</v-icon>
       </v-btn>
       <v-btn icon @click.stop="dark = !dark">
-        <v-icon>mdi-{{ `brightness-${dark ? '5' : '4'}` }}</v-icon>
+        <v-icon
+          >mdi-{{ `${dark ? 'weather-night' : 'white-balance-sunny'}` }}</v-icon
+        >
       </v-btn>
       <v-btn icon @click.stop="rightMini = !rightMini">
         <v-icon>
-          mdi-{{ `chevron-double-${rightMini ? 'left' : 'right'}` }}
+          mdi-{{ `${rightMini ? 'backburger' : 'forwardburger'}` }}
         </v-icon>
       </v-btn>
     </v-app-bar>
-    <v-content>
+    <v-main>
       <v-container fluid>
         <nuxt />
       </v-container>
-    </v-content>
+    </v-main>
     <v-navigation-drawer
       v-model="rightDrawer"
       right
-      clipped
+      :clipped="clipped"
       :mini-variant="rightMini"
       fixed
       app
@@ -110,8 +106,8 @@
         </v-list-item-content>
       </v-list-item>
     </v-navigation-drawer>
-    <v-footer height="auto" app>
-      <v-row justify="center">
+    <v-footer app>
+      <v-row justify="center" no-gutters>
         <v-btn
           v-for="link in items"
           :key="link.title"
@@ -122,19 +118,6 @@
         >
           {{ link.title }}
         </v-btn>
-        <!--        <v-flex primary lighten-2 py-1 text-xs-center white&#45;&#45;text xs12>-->
-        <!--          <span class="caption">-->
-        <!--            <strong>-->
-        <!--              <a-->
-        <!--                href="http://insight.uwo.ca"-->
-        <!--                target="_blank"-->
-        <!--                style="color: #fff6f9; text-decoration: none;"-->
-        <!--              >-->
-        <!--                Insight Lab @ Western </a-->
-        <!--              >— </strong-->
-        <!--            >&copy; {{ new Date().getFullYear() }}</span-->
-        <!--          >-->
-        <!--        </v-flex>-->
       </v-row>
     </v-footer>
   </v-app>

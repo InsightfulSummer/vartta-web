@@ -31,7 +31,9 @@
         <v-icon>mdi-network{{ disconnected ? '-off' : '' }}</v-icon>
       </v-btn>
       <v-btn icon @click.stop="dark = !dark">
-        <v-icon>mdi-{{ `lightbulb${dark ? '-on' : ''}` }}</v-icon>
+        <v-icon
+          >mdi-{{ `${dark ? 'weather-night' : 'white-balance-sunny'}` }}</v-icon
+        >
       </v-btn>
     </v-app-bar>
     <v-main>
