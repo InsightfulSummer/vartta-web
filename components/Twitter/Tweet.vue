@@ -1,104 +1,109 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
     <v-row class="text-left">
-      <v-col cols="2" class="pb-0">
-        <v-row justify="center" align="center">
-          <div>
-            <v-avatar>
-              <img
-                :src="tweet.user.profile_image_url_https || '/person.png'"
-                :alt="tweet.user.screen_name"
-              />
-            </v-avatar>
-          </div>
-          <div>
-            <v-btn
-              alt="Remove tweet to bottom pane"
-              icon
-              text
-              color="yellow accent-4"
-              @click="clicked"
-            >
-              <v-icon>{{ selected ? 'mdi-star' : 'mdi-star-outline' }}</v-icon>
-            </v-btn>
-          </div>
-          <div>
-            <v-dialog v-model="dialog" max-width="500px">
-              <template #activator="{ on }">
-                <v-btn text icon color="error" v-on="on">
-                  <v-icon>mdi-pencil</v-icon>
+      <v-col
+        cols="2"
+        class="d-flex flex-column justify-start align-center centered"
+      >
+        <div>
+          <v-avatar>
+            <img
+              :src="tweet.user.profile_image_url_https || '/person.png'"
+              :alt="tweet.user.screen_name"
+            />
+          </v-avatar>
+        </div>
+        <div>
+          <v-btn
+            alt="Pin/unpin tweet"
+            icon
+            small
+            text
+            color="brown"
+            @click="clicked"
+          >
+            <v-icon small>mdi-{{ selected ? 'pin' : 'pin-outline' }}</v-icon>
+          </v-btn>
+        </div>
+        <div>
+          <v-dialog v-model="dialog" max-width="500px">
+            <template #activator="{ on }">
+              <v-btn text icon small color="error" v-on="on">
+                <v-icon small>mdi-circle-edit-outline</v-icon>
+              </v-btn>
+            </template>
+            <v-card flat>
+              <v-card-title>
+                <span class="text-h6">Edit Tweet Labeling</span>
+              </v-card-title>
+              <v-divider></v-divider>
+              <v-card-text>
+                <v-row dense no-gutters>
+                  <!-- eslint-disable vue/no-v-html  -->
+                  <v-col cols="12" v-html="decoratedText"></v-col>
+                  <v-col cols="6">
+                    <v-combobox
+                      v-model="customGroup"
+                      :items="groups"
+                      chips
+                      label="User Category"
+                      clearable
+                    >
+                      <template #selection="data">
+                        <v-chip
+                          :key="JSON.stringify(data.item)"
+                          :selected="data.selected"
+                          @click.stop="data.parent.selectedIndex = data.index"
+                          @input="data.parent.selectItem(data.item)"
+                        >
+                          <v-icon left>mdi-account</v-icon>
+                          {{ data.item }}
+                        </v-chip>
+                      </template>
+                    </v-combobox>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-combobox
+                      v-model="customTheme"
+                      :items="themes"
+                      chips
+                      label="Content Theme"
+                      clearable
+                    >
+                      <template #selection="data">
+                        <v-chip
+                          :key="JSON.stringify(data.item)"
+                          :selected="data.selected"
+                          @click.stop="data.parent.selectedIndex = data.index"
+                          @input="data.parent.selectItem(data.item)"
+                        >
+                          <v-icon left>mdi-tag</v-icon>
+                          {{ data.item }}
+                        </v-chip>
+                      </template>
+                    </v-combobox>
+                  </v-col>
+                </v-row>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click="closeDialog(false)">
+                  Close
                 </v-btn>
-              </template>
-              <v-card flat>
-                <v-card-title>
-                  <span class="text-h6">Edit Tweet Labeling</span>
-                </v-card-title>
-                <v-divider></v-divider>
-                <v-card-text>
-                  <v-row dense no-gutters>
-                    <!-- eslint-disable vue/no-v-html  -->
-                    <v-col cols="12" v-html="decoratedText"></v-col>
-                    <v-col cols="6">
-                      <v-combobox
-                        v-model="customGroup"
-                        :items="groups"
-                        chips
-                        label="User Category"
-                        clearable
-                      >
-                        <template #selection="data">
-                          <v-chip
-                            :key="JSON.stringify(data.item)"
-                            :selected="data.selected"
-                            @click.stop="data.parent.selectedIndex = data.index"
-                            @input="data.parent.selectItem(data.item)"
-                          >
-                            <v-icon left>mdi-account</v-icon>
-                            {{ data.item }}
-                          </v-chip>
-                        </template>
-                      </v-combobox>
-                    </v-col>
-                    <v-col cols="6">
-                      <v-combobox
-                        v-model="customTheme"
-                        :items="themes"
-                        chips
-                        label="Content Theme"
-                        clearable
-                      >
-                        <template #selection="data">
-                          <v-chip
-                            :key="JSON.stringify(data.item)"
-                            :selected="data.selected"
-                            @click.stop="data.parent.selectedIndex = data.index"
-                            @input="data.parent.selectItem(data.item)"
-                          >
-                            <v-icon left>mdi-tag</v-icon>
-                            {{ data.item }}
-                          </v-chip>
-                        </template>
-                      </v-combobox>
-                    </v-col>
-                  </v-row>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="closeDialog(false)">
-                    Close
-                  </v-btn>
-                  <v-btn color="blue darken-1" text @click="closeDialog(true)">
-                    Save
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </div>
-        </v-row>
+                <v-btn color="blue darken-1" text @click="closeDialog(true)">
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </div>
       </v-col>
-      <v-col cols="10" class="pb-0">
-        <v-row justify="start" align="center">
-          <div class="text-truncate" style="max-width: 85%">
+      <v-col cols="10">
+        <div class="justify-start align-center">
+          <div
+            class="text-truncate"
+            style="max-width: 85%; display: inline-block"
+          >
             <a
               style="text-decoration: none; color: unset !important"
               :href="'https://twitter.com/' + tweet.user.screen_name"
@@ -119,11 +124,11 @@
             </a>
           </div>
           <span class="text-caption">· {{ niceDate }}</span>
-        </v-row>
-        <v-row justify="start" align="start">
+        </div>
+        <div class="justify-start align-center">
           <!-- eslint-disable vue/no-v-html  -->
           <div class="text-body-2" v-html="decoratedText"></div>
-        </v-row>
+        </div>
         <v-btn block text @click="expand = !expand">
           <v-icon>{{
             expand ? 'mdi-chevron-double-up' : 'mdi-chevron-double-down'
