@@ -25,7 +25,10 @@
         ></tweet>
       </v-card-text>
       <v-divider></v-divider>
-      <v-card-actions class="justify-space-around align-center">
+      <v-card-actions
+        class="justify-space-around align-center"
+        style="overflow: auto"
+      >
         <v-skeleton-loader
           v-if="selectedTweets.length === 0"
           type="avatar"

@@ -1,6 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
-    <v-row class="text-left">
+    <v-row class="text-left mt-1">
       <v-col
         cols="2"
         class="d-flex flex-column justify-start align-center centered"
