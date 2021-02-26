@@ -10,10 +10,18 @@
             <v-icon>mdi-dots-vertical</v-icon>
           </v-btn>
         </template>
-
         <v-list>
-          <v-list-item v-for="(item, index) in menu.items" :key="index">
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          <v-list-item link @click="saveSVG">
+            <v-list-item-icon>
+              <v-icon>mdi-content-save-outline</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Save SVG</v-list-item-title>
+          </v-list-item>
+          <v-list-item link>
+            <v-list-item-icon>
+              <v-icon>mdi-arrow-expand</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Expand</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -30,7 +38,7 @@
         />
       </div>
     </v-card-text>
-    <!-- <v-menu
+    <v-menu
       v-model="menu.show"
       :position-x="menu.x"
       :position-y="menu.y"
@@ -39,11 +47,14 @@
       offset-y
     >
       <v-list>
-        <v-list-item v-for="(item, index) in menu.items" :key="index">
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        <v-list-item link @click="saveSVG">
+          <v-list-item-title>Save SVG</v-list-item-title>
+        </v-list-item>
+        <v-list-item link>
+          <v-list-item-title>Expand</v-list-item-title>
         </v-list-item>
       </v-list>
-    </v-menu> -->
+    </v-menu>
 
     <!--    <v-card-actions>-->
     <!--      <v-btn icon small @click="meta.show = !meta.show">-->
@@ -132,7 +143,6 @@ export default {
     return {
       colorRange: ['#d7ffdb', '#006c03'],
       menu: {
-        items: [{ title: 'Hello!' }, { title: 'Hi!' }],
         show: false,
         x: 0,
         y: 0,
@@ -189,13 +199,23 @@ export default {
   },
   methods: {
     showContextMenu(e) {
-      // e.preventDefault()
-      // this.menu.show = false
-      // this.menu.x = e.clientX
-      // this.menu.y = e.clientY
-      // this.$nextTick(() => {
-      //   this.menu.show = true
-      // })
+      e.preventDefault()
+      this.menu.show = false
+      this.menu.x = e.clientX
+      this.menu.y = e.clientY
+      this.$nextTick(() => {
+        this.menu.show = true
+      })
+    },
+    saveSVG() {
+      const config = {
+        filename: 'customFileName',
+      }
+      const that = this
+      this.$d3SaveSVG.save(
+        that.$d3.select('#' + that.id + '-svg').node(),
+        config
+      )
     },
   },
 }
