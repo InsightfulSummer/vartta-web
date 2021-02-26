@@ -1,8 +1,22 @@
 <template>
-  <v-card :outlined="outlined" :flat="flat">
+  <v-card :outlined="outlined" :flat="flat" @contextmenu="showContextMenu">
     <v-card-title>
       {{ label }}
       ({{ selectedTopic }} {{ selectedAnalysisMethod }} )
+      <v-spacer></v-spacer>
+      <v-menu open-on-hover bottom offset-y>
+        <template #activator="{ on }">
+          <v-btn icon small v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list>
+          <v-list-item v-for="(item, index) in menu.items" :key="index">
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </v-card-title>
     <v-divider></v-divider>
     <v-card-text>
@@ -16,6 +30,21 @@
         />
       </div>
     </v-card-text>
+    <!-- <v-menu
+      v-model="menu.show"
+      :position-x="menu.x"
+      :position-y="menu.y"
+      open-on-hover
+      absolute
+      offset-y
+    >
+      <v-list>
+        <v-list-item v-for="(item, index) in menu.items" :key="index">
+          <v-list-item-title>{{ item.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu> -->
+
     <!--    <v-card-actions>-->
     <!--      <v-btn icon small @click="meta.show = !meta.show">-->
     <!--        <v-icon>-->
@@ -102,9 +131,11 @@ export default {
   data() {
     return {
       colorRange: ['#d7ffdb', '#006c03'],
-      meta: {
+      menu: {
+        items: [{ title: 'Hello!' }, { title: 'Hi!' }],
         show: false,
-        info: 'Hello this is only a help box!',
+        x: 0,
+        y: 0,
       },
     }
   },
@@ -154,6 +185,17 @@ export default {
       return final.sort((a, b) => {
         return a.sort > b.sort ? 1 : -1
       })
+    },
+  },
+  methods: {
+    showContextMenu(e) {
+      // e.preventDefault()
+      // this.menu.show = false
+      // this.menu.x = e.clientX
+      // this.menu.y = e.clientY
+      // this.$nextTick(() => {
+      //   this.menu.show = true
+      // })
     },
   },
 }
