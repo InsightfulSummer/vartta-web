@@ -29,7 +29,7 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [{ src: '~/plugins/multiTabState.client.js' }],
   /*
    ** Nuxt.js dev-modules
    */
