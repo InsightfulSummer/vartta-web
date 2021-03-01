@@ -1,7 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
-  mode: 'universal',
   /*
    ** Headers of the page
    */
@@ -30,7 +29,11 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/multiTabState.client.js' },
+    { src: '~/plugins/d3.js' },
+    { src: '~/plugins/d3save.js' },
+  ],
   /*
    ** Nuxt.js dev-modules
    */

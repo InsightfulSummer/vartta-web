@@ -35,7 +35,7 @@
         :transform="'translate(' + chartLeft + ',' + chartBottom + ')'"
       >
         <text
-          class="label title"
+          class="label text-h6"
           :transform="'translate(' + (chartWidth / 2 + 90) + ',+31)'"
         >
           {{ axesMeta.x.label }}
@@ -46,7 +46,7 @@
         :transform="'translate(' + chartLeft + ',' + chartTop + ')'"
       >
         <text
-          class="label title"
+          class="label text-h6"
           :transform="
             'rotate(-90) translate(' + -(chartHeight / 2 - 70) + ',-25)'
           "
@@ -95,7 +95,7 @@
       v-if="contextMenu"
       :id="chartDomID + '-tooltip'"
       class="tooltip"
-      style="position: fixed; opacity: 0; z-index: 999; overflow: auto;"
+      style="position: fixed; opacity: 0; z-index: 999; overflow: auto"
     >
       <v-sheet class="d-flex" color="black" dark>
         <v-data-table
@@ -103,7 +103,7 @@
           :items="highlightedData.analysis"
           hide-actions
         >
-          <template v-slot:items="props">
+          <template #items="props">
             <td>{{ props.item.title }}</td>
             <td>{{ +props.item.result.toPrecision(4) }}</td>
           </template>
@@ -190,7 +190,7 @@ export default {
     selectedData: {
       type: Object,
       default() {
-        return []
+        return {}
       },
     },
     padding: {
@@ -441,9 +441,9 @@ export default {
 </script>
 
 <style scoped>
-.svg {
-  /*background: lightgrey;*/
-}
+/* .svg {
+  background: lightgrey;
+} */
 
 .view {
   fill: transparent;
@@ -453,6 +453,11 @@ export default {
 .axis >>> .tick line {
   stroke: #e6deec;
   stroke-dasharray: 1;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 
 /* Axis Labels */
@@ -492,10 +497,5 @@ export default {
 
 .fade-leave-active {
   fill: brown;
-}
-
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>

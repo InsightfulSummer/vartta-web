@@ -15,13 +15,13 @@
           :d="arc(item)"
           :fill="colorScale(item.data.name)"
           :fill-opacity="arcVisible(item) ? (item.children ? 0.9 : 0.4) : 0"
-          style="cursor: pointer;"
+          style="cursor: pointer"
           @click="clicked"
         >
           <title>{{ item.data.name }}</title>
         </path>
       </g>
-      <g pointer-events="null" text-anchor="middle" style="user-select: none;">
+      <g pointer-events="null" text-anchor="middle" style="user-select: none">
         <text
           v-for="(item, index) in dataset.descendants().slice(1)"
           :key="index"
@@ -140,8 +140,8 @@ export default {
 </script>
 
 <style scoped>
-.sunburst {
-}
+/* .sunburst {}
+*/
 
 .sunburst-text {
   font-size: 0.8vmax;

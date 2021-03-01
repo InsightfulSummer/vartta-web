@@ -1,13 +1,8 @@
 <template>
   <v-card outlined>
-    <v-card-title>
-      User Profile
-    </v-card-title>
+    <v-card-title> User Profile </v-card-title>
     <v-divider></v-divider>
-    <v-card-text
-      id="timeline-target"
-      style="max-height: 638px; overflow: auto;"
-    >
+    <v-card-text id="timeline-target" style="max-height: 638px; overflow: auto">
       <v-skeleton-loader
         v-if="username === '' || username === null"
         type="card-heading, divider, list-item-avatar-three-line, divider,

@@ -82,7 +82,8 @@
             :items="selectedComparisons"
             class="elevation-1"
           >
-            <template v-slot:item.compared_to="{ item }">
+            <!-- eslint-disable-next-line vue/valid-v-slot -->
+            <template #item.compared_to="{ item }">
               <v-chip pill>
                 <v-avatar left>
                   <v-img
@@ -143,7 +144,7 @@
             align="start"
             justify="start"
             class="smooth-scroll flex-nowrap"
-            style="height: 100%; max-height: 100%;"
+            style="height: 100%; max-height: 100%"
             dense
             no-gutters
           >
@@ -152,7 +153,7 @@
               :id="'column-' + user.screen_name"
               :key="'column-' + index"
               :tweets="user.tweets"
-              :title="user.name + ' @' + user.screen_name"
+              :title="'From @' + user.screen_name"
               :vertical-portion="40"
             ></tweet-collection>
           </v-row>
@@ -170,7 +171,6 @@ import TweetCollection from '~/components/Twitter/TweetCollection'
 // import UserInfo from '../components/Triage/UserInfo'
 export default {
   name: 'Triage',
-  layout: 'triage',
   components: {
     // UserInfo,
     // UserSimilarity,
@@ -179,6 +179,7 @@ export default {
     TweetCollection,
     // Treemap,
   },
+  layout: 'triage',
   data() {
     return {
       flat: true,

@@ -279,9 +279,11 @@ export default {
 </script>
 
 <style scoped>
+/*
 .svg {
-  /*background: lightgrey;*/
+  background: lightgrey;
 }
+*/
 
 .x-axis >>> .tick,
 .y-axis >>> .tick {

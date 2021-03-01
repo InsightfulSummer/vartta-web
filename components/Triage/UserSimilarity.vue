@@ -83,7 +83,7 @@ export default {
       default: 'user-similarity',
     },
     tfidf: {
-      tyep: Object,
+      type: Object,
       default() {
         return {}
       },

@@ -3,8 +3,8 @@
     <v-col class="text-center" cols="12">
       <v-card flat color="transparent">
         <v-card-text>
-          <h1 class="display-1">Welcome to VARTTA</h1>
-          <h2 class="title">
+          <h1 class="text-h4">Welcome to VARTTA</h1>
+          <h2 class="text-h6">
             VARTTA: Visual Analytics for Real-Time Twitter datA. <br />
           </h2>
           <p>To start, please select one of the following scenarios.</p>
@@ -43,8 +43,8 @@
               v-if="
                 selectedScenario !== null && selectedScenario.id !== scenario.id
               "
-              class="d-flex text-center transition-fast-in-fast-out grey darken-2 v-card--reveal--disconnected display-3 white--text"
-              style="height: 100%;"
+              class="d-flex text-center transition-fast-in-fast-out grey darken-2 v-card--reveal--disconnected text-h2 white--text"
+              style="height: 100%"
             >
               Another scenario is selected...
             </div>
@@ -54,7 +54,7 @@
                 'd-flex text-xs-center transition-fast-in-fast-out darken-2 v-card--reveal display-3 white--text ' +
                 scenario.color
               "
-              style="height: 100%;"
+              style="height: 100%"
             >
               {{
                 selectedScenario !== null
@@ -65,7 +65,7 @@
               }}
             </div>
           </v-img>
-          <v-card-text class="pt-4" style="position: relative;">
+          <v-card-text class="pt-4" style="position: relative">
             <v-btn
               absolute
               :color="scenario.color"
@@ -74,7 +74,9 @@
               large
               right
               top
-              :disabled="(selectedScenario !== null && selectedScenario.id !== scenario.id)"
+              :disabled="
+                selectedScenario !== null && selectedScenario.id !== scenario.id
+              "
               @click.stop="toggleConsuming(scenario)"
             >
               <v-icon>
@@ -94,7 +96,7 @@
             >
               {{ scenario.title }}
             </h3>
-            <div class="font-weight-light title mb-2">
+            <div class="font-weight-light text-h6 mb-2">
               {{ scenario.subtitle }}
             </div>
           </v-card-text>
@@ -107,34 +109,34 @@
           <v-img :aspect-ratio="16 / 9" src="">
             <div
               v-if="!hover"
-              class="d-flex text-center transition-fast-in-fast-out v-card--reveal display-3 white--text primary"
-              style="height: 100%;"
+              class="d-flex text-center transition-fast-in-fast-out v-card--reveal text-h2 white--text primary"
+              style="height: 100%"
             >
               Custom Scenario
             </div>
             <div
               v-if="disconnected"
-              class="d-flex text-center transition-fast-in-fast-out grey darken-2 v-card--reveal--disconnected display-3 white--text"
-              style="height: 100%;"
+              class="d-flex text-center transition-fast-in-fast-out grey darken-2 v-card--reveal--disconnected text-h2 white--text"
+              style="height: 100%"
             >
               Disconnected
             </div>
             <div
               v-else-if="selectedScenario && selectedScenario.id !== ''"
-              class="d-flex text-center transition-fast-in-fast-out grey darken-2 v-card--reveal--disconnected display-3 white--text"
-              style="height: 100%;"
+              class="d-flex text-center transition-fast-in-fast-out grey darken-2 v-card--reveal--disconnected text-h2 white--text"
+              style="height: 100%"
             >
               Another scenario is selected...
             </div>
             <div
               v-else-if="hover"
-              class="d-flex text-center transition-fast-in-fast-out darken-2 v-card--reveal display-3 white--text primary"
-              style="height: 100%;"
+              class="d-flex text-center transition-fast-in-fast-out darken-2 v-card--reveal text-h2 white--text primary"
+              style="height: 100%"
             >
               Start
             </div>
           </v-img>
-          <v-card-text class="pt-4" style="position: relative;">
+          <v-card-text class="pt-4" style="position: relative">
             <v-btn
               absolute
               color="warning"
@@ -153,7 +155,7 @@
               </v-icon>
             </v-btn>
             <v-dialog v-model="dialog" max-width="800px">
-              <template v-slot:activator="{ on }">
+              <template #activator="{ on }">
                 <v-btn
                   absolute
                   color="primary"
@@ -256,7 +258,7 @@
               </v-card>
             </v-dialog>
             <br />
-            <h3 class="display-1 font-weight-light mb-2 primary--text">
+            <h3 class="text-h4 font-weight-light mb-2 primary--text">
               {{ suggestedScenario.title }}
             </h3>
           </v-card-text>
