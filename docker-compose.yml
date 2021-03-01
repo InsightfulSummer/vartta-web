@@ -5,4 +5,4 @@ services:
     build:
       context: .
     ports:
-    - 5100:4050
+    - 5050:4050
