@@ -13086,10 +13086,10 @@ vuetify@^2.4.2:
   resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.4.5.tgz#86de190720d25511df9be37ff3c16a568972fc2d"
   integrity sha512-P4bN9xwyU91Iq1iW/XBCzgVMQ9fHG0HgJeiPDRoHzC0fX6ZPYBZIN6xPCuoG7zLyGSSoc6JnQqnO7H5mPEsVuA==
 
-vuex-multi-tab-state@^1.0.16:
-  version "1.0.16"
-  resolved "https://registry.yarnpkg.com/vuex-multi-tab-state/-/vuex-multi-tab-state-1.0.16.tgz#8f0323f311dde8b3631cbd8f5120ae2f2cd4ff26"
-  integrity sha512-Xh2gOMJSQGXHVi+0JoDEXvXoe5nHemIA5SSKe2fdo9kLV1ZKeY40KlHVvYrcx4miD57tG/jtlX9wER98XGA3sw==
+vuex-multi-tab-state@^1.0.17:
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/vuex-multi-tab-state/-/vuex-multi-tab-state-1.0.17.tgz#e65c70601e192eebf01a223775a33768d2e12c25"
+  integrity sha512-u9UeDLlHhSHLtLpJ8Hg1hklLB0+YY9q8zhMf837FZg22L4MnpgtTFDX1ozS0WK8l1oVFrMvofAhDN8SZWA1p2w==
   dependencies:
     dot-object "^2.1.4"
 
